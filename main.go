@@ -23,7 +23,7 @@ func sendEmail(filename string) {
 		m.SetHeader("To", "blockchainwarning@omnisolu.com")
 		//m.SetAddressHeader("Cc", "dan@example.com", "Dan")
 		m.SetHeader("Subject", "Dappley Web Block Check:")
-		m.SetBody("text/html", "<p> Informations in the attachment below </p>")
+		m.SetBody("text/html", "<p> There is a failing test <br> Detailed inormation can be accessed throught the attachment file below. <br> NOTE*: Please make sure to download the file before opening it. </p>")
 		m.Attach(filename)
 
 		d := gomail.NewDialer("smtp.gmail.com", 587, "blockchainwarning@omnisolu.com", "01353751")
