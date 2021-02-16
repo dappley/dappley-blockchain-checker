@@ -1,0 +1,64 @@
+newman
+
+Dappley
+
+→ getBlocks
+  POST http://api.dappworks.xyz/getBlocks?pageNum=1&pageSize=20 [200 OK, 7.77KB, 3.4s]
+  ✓  Status code is 200
+  ✓  Hash values of the latest 5 blocks are unique.
+  1. There are less than 5 unique miners.
+  ✓  The time difference between local and the lastest block is less than 1 minuete.
+
+┌─────────────────────────┬──────────────────┬──────────────────┐
+│                         │         executed │           failed │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│              iterations │                1 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│                requests │                1 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│            test-scripts │                1 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│      prerequest-scripts │                0 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│              assertions │                4 │                1 │
+├─────────────────────────┴──────────────────┴──────────────────┤
+│ total run duration: 3.5s                                      │
+├───────────────────────────────────────────────────────────────┤
+│ total data received: 7.42KB (approx)                          │
+├───────────────────────────────────────────────────────────────┤
+│ average response time: 3.4s [min: 3.4s, max: 3.4s, s.d.: 0µs] │
+└───────────────────────────────────────────────────────────────┘
+
+  #  failure  detail                               
+                                                   
+ 1.  Error    There are less than 5 unique miners. 
+              ALL Miners:                          
+              dMuqxzmiLtqt23Dmbbn85A1zufGEYFf7RA   
+              dU8UhbpxXPDXHas9Zgm3iSeg9X9GaFU7w2   
+              dNFQxcev8MiS73L4LQ6LgYHaGoT6h3qbLA   
+              dHZDS4Y9w2ayczcd9tT2XFv6BvEyp5ThsQ   
+              dSAMZ54UtSgtDkNJo7JQUU4m6GjQ2pdoav   
+              dMuqxzmiLtqt23Dmbbn85A1zufGEYFf7RA   
+              dU8UhbpxXPDXHas9Zgm3iSeg9X9GaFU7w2   
+              dNFQxcev8MiS73L4LQ6LgYHaGoT6h3qbLA   
+              dHZDS4Y9w2ayczcd9tT2XFv6BvEyp5ThsQ   
+              dSAMZ54UtSgtDkNJo7JQUU4m6GjQ2pdoav   
+              dMuqxzmiLtqt23Dmbbn85A1zufGEYFf7RA   
+              dU8UhbpxXPDXHas9Zgm3iSeg9X9GaFU7w2   
+              dNFQxcev8MiS73L4LQ6LgYHaGoT6h3qbLA   
+              dHZDS4Y9w2ayczcd9tT2XFv6BvEyp5ThsQ   
+              dSAMZ54UtSgtDkNJo7JQUU4m6GjQ2pdoav   
+              dMuqxzmiLtqt23Dmbbn85A1zufGEYFf7RA   
+              dU8UhbpxXPDXHas9Zgm3iSeg9X9GaFU7w2   
+              dNFQxcev8MiS73L4LQ6LgYHaGoT6h3qbLA   
+              dHZDS4Y9w2ayczcd9tT2XFv6BvEyp5ThsQ   
+              dSAMZ54UtSgtDkNJo7JQUU4m6GjQ2pdoav   
+              Unique Miners:                       
+              dMuqxzmiLtqt23Dmbbn85A1zufGEYFf7RA   
+              dU8UhbpxXPDXHas9Zgm3iSeg9X9GaFU7w2   
+              dNFQxcev8MiS73L4LQ6LgYHaGoT6h3qbLA   
+              dHZDS4Y9w2ayczcd9tT2XFv6BvEyp5ThsQ   
+              dSAMZ54UtSgtDkNJo7JQUU4m6GjQ2pdoav   
+                                                   
+              at assertion:2 in test-script        
+              inside "getBlocks"                   
