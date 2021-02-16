@@ -33,7 +33,7 @@ func sendEmail(filename string) {
 		}
 		m := gomail.NewMessage()
 		m.SetHeader("From", "blockchainwarning@omnisolu.com")
-		m.SetHeader("To", "blockchainwarning@omnisolu.com", "lwu@omnisolu.com")
+		m.SetHeader("To", "blockchainwarning@omnisolu.com")
 		//m.SetAddressHeader("Cc", "dan@example.com", "Dan")
 		m.SetHeader("Subject", "Dappley Web Block Check:")
 		m.SetBody("text", emailMessage)
