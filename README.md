@@ -19,13 +19,13 @@ pipeline {
         }
         stage('Postman Test') {
             steps {
-                sh 'newman run https://www.getpostman.com/collections/761f5d0bf6cc08b8518f --reporters=cli,htmlextra --reporter-htmlextra-export "newman/report.html"'
+                sh 'newman run https://www.getpostman.com/collections/761f5d0bf6cc08b8518f > log.txt'
             }
         }
         stage('Build & Deploy') {
             steps {
                 sh 'go build'
-                sh './DappleyWeb_Pipeline -fileName "newman/report.html"'
+                sh './DappleyWeb_Pipeline -fileName "newman/log.txt"'
             }
         }
         stage('Close') {

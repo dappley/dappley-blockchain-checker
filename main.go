@@ -2,6 +2,8 @@ package main
 
 import (
 	"gopkg.in/gomail.v2"
+	"io/ioutil"
+	"strings"
 	"flag"
 )
 
@@ -13,11 +15,11 @@ func main() {
 }
 
 func sendEmail(filename string) {
-	// errMSG, err := ioutil.ReadFile(filename)
-	// if err != nil {
-	// 	return
-	// }
-	//if (strings.Contains(string(errMSG), "failure")) {
+	result, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return
+	}
+	if (strings.Contains(string(result), "failure")) {
 		m := gomail.NewMessage()
 		m.SetHeader("From", "blockchainwarning@omnisolu.com")
 		m.SetHeader("To", "blockchainwarning@omnisolu.com")
@@ -31,5 +33,5 @@ func sendEmail(filename string) {
 		if err := d.DialAndSend(m); err != nil {
 			panic(err)
 		}
-	//}
+	}
 }
