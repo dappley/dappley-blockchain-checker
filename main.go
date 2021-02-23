@@ -20,7 +20,7 @@ func sendEmail(filename string) {
 	if err != nil {
 		return
 	}
-	//if (strings.Contains(string(result), "failure")) {
+	if (strings.Contains(string(result), "failure")) {
 		emailMessage := ""
 		CommitScanner := bufio.NewScanner(strings.NewReader(string(result)))
 		for CommitScanner.Scan() {
@@ -33,7 +33,7 @@ func sendEmail(filename string) {
 		}
 		m := gomail.NewMessage()
 		m.SetHeader("From", "blockchainwarning@omnisolu.com")
-		m.SetHeader("To", "blockchainwarning@omnisolu.com", "heesoohwang1231@gmail.com", "hhshsk6@gmail.com", "hhwang@omnisolu.com")
+		m.SetHeader("To", "blockchainwarning@omnisolu.com", "wulize1994@gmail.com", "rshi@omnisolu.com", "ilshiyi@omnisolu.com")
 		//m.SetAddressHeader("Cc", "dan@example.com", "Dan")
 		m.SetHeader("Subject", "***Important - Dappley Web Block Check:")
 		m.SetBody("text", emailMessage)
@@ -44,5 +44,5 @@ func sendEmail(filename string) {
 		if err := d.DialAndSend(m); err != nil {
 			panic(err)
 		}
-	//}
+	}
 }
