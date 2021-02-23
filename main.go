@@ -35,7 +35,7 @@ func sendEmail(filename string) {
 		m.SetHeader("From", "blockchainwarning@omnisolu.com")
 		m.SetHeader("To", "blockchainwarning@omnisolu.com", "heesoohwang1231@gmail.com", "hhshsk6@gmail.com", "hhwang@omnisolu.com")
 		//m.SetAddressHeader("Cc", "dan@example.com", "Dan")
-		m.SetHeader("Subject", "***Important - Dappley Web Block Check:")
+		m.SetHeader("Subject", "Dappley Web Block Check:")
 		m.SetBody("text", emailMessage)
 		m.Attach(filename)
 
