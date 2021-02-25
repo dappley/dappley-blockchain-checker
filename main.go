@@ -77,7 +77,7 @@ func makeMessage(filename string) (string, string){
 		}
 
 		//Create upper bound
-		upperBound := "19:55:00"
+		upperBound := "09:55:00"
 		after, err := time.Parse(layout, upperBound)
 		if err != nil {
 			log.Fatal(err)
@@ -89,10 +89,6 @@ func makeMessage(filename string) (string, string){
 		if err != nil {
 			log.Fatal(err)
 		}
-
-		fmt.Println(before)
-		fmt.Println(now)
-		fmt.Println(after)
 
 		//If current time is between the upper and lower bound
 		//Then check when last error was generated
