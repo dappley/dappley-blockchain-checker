@@ -90,6 +90,10 @@ func makeMessage(filename string) (string, string){
 			log.Fatal(err)
 		}
 
+		fmt.Println(before)
+		fmt.Println(now)
+		fmt.Println(after)
+
 		//If current time is between the upper and lower bound
 		//Then check when last error was generated
 		if (before.Before(now) && after.After(now)) {
