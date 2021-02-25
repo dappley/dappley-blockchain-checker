@@ -126,10 +126,13 @@ func makeMessage(filename string) (string, string){
 func sendEmail(subject string, emailMessage string, fileName string, email string, passWord string) {
 	gmail := gomail.NewMessage()
 		gmail.SetHeader("From", email)
-		gmail.SetHeader("To", "blockchainwarning@omnisolu.com") /*, 
-								  "wulize1994@gmail.com", 
-								  "rshi@omnisolu.com", 
-								  "ilshiyi@omnisolu.com") */
+		gmail.SetHeader("To", "blockchainwarning@omnisolu.com", 
+							"heesoohwang1231@gmail.com",
+							"hhshsk6@gmail.com",
+							"hhwang@omnisolu.com")
+							//   "wulize1994@gmail.com", 
+							//   "rshi@omnisolu.com", 
+							//   "ilshiyi@omnisolu.com")
 		gmail.SetHeader("Subject", subject)
 		gmail.SetBody("text", emailMessage)
 		gmail.Attach(fileName)
