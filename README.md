@@ -27,7 +27,7 @@ pipeline {
         stage('Build & Deploy') {
             steps {
                 sh 'go build'
-                sh './DappleyWeb_Pipeline -fileName "log.txt"'
+                sh ' ./DappleyWeb_Pipeline -fileName "log.txt" -email <Email Address> -passWord <Email Password>'
             }
         }
         stage('Close') {
