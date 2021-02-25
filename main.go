@@ -77,7 +77,7 @@ func makeMessage(filename string) (string, string){
 		}
 
 		//Create upper bound
-		upperBound := "19:55:00"
+		upperBound := "09:55:00"
 		after, err := time.Parse(layout, upperBound)
 		if err != nil {
 			log.Fatal(err)
@@ -127,12 +127,9 @@ func sendEmail(subject string, emailMessage string, fileName string, email strin
 	gmail := gomail.NewMessage()
 		gmail.SetHeader("From", email)
 		gmail.SetHeader("To", "blockchainwarning@omnisolu.com", 
-							"heesoohwang1231@gmail.com",
-							"hhshsk6@gmail.com",
-							"hhwang@omnisolu.com")
-							//   "wulize1994@gmail.com", 
-							//   "rshi@omnisolu.com", 
-							//   "ilshiyi@omnisolu.com")
+							  "wulize1994@gmail.com", 
+							  "rshi@omnisolu.com", 
+							  "ilshiyi@omnisolu.com")
 		gmail.SetHeader("Subject", subject)
 		gmail.SetBody("text", emailMessage)
 		gmail.Attach(fileName)
