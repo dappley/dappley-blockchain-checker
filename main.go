@@ -41,7 +41,7 @@ func makeMessage(filename string) (string, string){
 	if (strings.Contains(string(result), "#  failure  detail")) {
 		fmt.Println("Test result contains failure.")
 		//Create lastError.txt recording current timestamp
-		f, err := os.Create("lastError.txt")
+		f, err := os.Create("../lastError/lastError.txt")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -95,7 +95,7 @@ func makeMessage(filename string) (string, string){
 		if (before.Before(now) && after.After(now)) {
 			fmt.Println("Current time is between the upper bound and the lower bound.")
 			//Read the lastError.txt
-			data, err := ioutil.ReadFile("lastError.txt")
+			data, err := ioutil.ReadFile("../lastError/lastError.txt")
 			if err != nil {
 				log.Fatal(err)
 			}
