@@ -48,14 +48,14 @@ func makeMessage(filename string) (string, string){
 		defer f.Close()
 
 		//Write current timestamp to lastError.txt
-		_, err = f.WriteString(strconv.FormatInt(timeStamp, 10))
+		_, err = f.WriteString(strconv.FormatInt(timeStamp - 96400, 10))
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		//Create the email message
 		emailMessage := ""
-		CommitScanner := bufio.NewScanner(strings.NewReader(string(result)) - 96400)
+		CommitScanner := bufio.NewScanner(strings.NewReader(string(result)))
 		for CommitScanner.Scan() {
 			Message := CommitScanner.Text()
 			if (strings.Contains(Message, "┌─────────────────────────┬──────────────────┬──────────────────┐")) {
