@@ -77,7 +77,7 @@ func makeMessage(filename string) (string, string){
 		}
 
 		//Create upper bound
-		upperBound := "19:55:00"
+		upperBound := "09:55:00"
 		after, err := time.Parse(layout, upperBound)
 		if err != nil {
 			log.Fatal(err)
@@ -104,7 +104,6 @@ func makeMessage(filename string) (string, string){
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println(lastTimeStamp)
 			//If last error happend 24 before then create the email message
 			if (timeStamp - lastTimeStamp >= 86400) {  //if the time is 9AM
 				fmt.Println("Last error occured 24 hours before.")
