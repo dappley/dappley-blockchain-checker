@@ -77,7 +77,7 @@ func makeMessage(filename string) (string, string){
 		}
 
 		//Create upper bound
-		upperBound := "09:55:00"
+		upperBound := "19:55:00"
 		after, err := time.Parse(layout, upperBound)
 		if err != nil {
 			log.Fatal(err)
