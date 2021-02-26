@@ -48,7 +48,7 @@ func makeMessage(filename string) (string, string){
 		defer f.Close()
 
 		//Write current timestamp to lastError.txt
-		_, err = f.WriteString(strconv.FormatInt(timeStamp - 96400, 10))
+		_, err = f.WriteString(strconv.FormatInt(timeStamp, 10))
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -126,10 +126,10 @@ func makeMessage(filename string) (string, string){
 func sendEmail(subject string, emailMessage string, fileName string, email string, passWord string) {
 	gmail := gomail.NewMessage()
 		gmail.SetHeader("From", email)
-		gmail.SetHeader("To", "blockchainwarning@omnisolu.com") /* , 
+		gmail.SetHeader("To", "blockchainwarning@omnisolu.com", 
 							  "wulize1994@gmail.com", 
 							  "rshi@omnisolu.com", 
-							  "ilshiyi@omnisolu.com") */ 
+							  "ilshiyi@omnisolu.com")
 		gmail.SetHeader("Subject", subject)
 		gmail.SetBody("text", emailMessage)
 		gmail.Attach(fileName)
