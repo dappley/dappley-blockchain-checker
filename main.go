@@ -104,6 +104,7 @@ func makeMessage(filename string) (string, string){
 			if err != nil {
 				log.Fatal(err)
 			}
+			fmt.Println(lastTimeStamp)
 			//If last error happend 24 before then create the email message
 			if (timeStamp - lastTimeStamp >= 86400) {  //if the time is 9AM
 				fmt.Println("Last error occured 24 hours before.")
