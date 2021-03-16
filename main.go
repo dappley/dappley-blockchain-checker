@@ -186,7 +186,7 @@ func timeFrame(currTime time.Time) (before, now, after time.Time) {
 	}
 
 	//Create upper bound
-	upperBound := "19:55:00"
+	upperBound := "09:55:00"
 	after, err = time.Parse(layout, upperBound)
 	if err != nil {
 		log.Fatal(err)
