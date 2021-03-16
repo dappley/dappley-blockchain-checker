@@ -33,7 +33,7 @@ func main() {
 	if (subject != "" && emailMessage != "") {
 		sendEmail(subject, emailMessage, fileNames, email, passWord)
 	} else {
-		fmt.Println("Unable to send Email!")
+		fmt.Println("Email not sent.")
 	}
 }
 
@@ -106,10 +106,10 @@ func makeMessage(fileNames []string) (string, string){
 func sendEmail(subject string, emailMessage string, fileNames []string, email string, passWord string) {
 	gmail := gomail.NewMessage()
 		gmail.SetHeader("From", email)
-		gmail.SetHeader("To", "blockchainwarning@omnisolu.com") /*, 
+		gmail.SetHeader("To", "blockchainwarning@omnisolu.com", 
 							  "wulize1994@gmail.com", 
 							  "rshi@omnisolu.com", 
-							  "ilshiyi@omnisolu.com")*/
+							  "ilshiyi@omnisolu.com")
 		gmail.SetHeader("Subject", subject)
 		gmail.SetBody("text", emailMessage)
 
@@ -144,7 +144,7 @@ func UpdateLastError(serverType string, currTime time.Time) {
 	defer f.Close()
 	
 	//Write current timestamp to the lastError file
-	_, err = f.WriteString("1615838400")//(strconv.FormatInt(currTime.Unix(), 10))
+	_, err = f.WriteString(strconv.FormatInt(currTime.Unix(), 10))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -186,7 +186,7 @@ func timeFrame(currTime time.Time) (before, now, after time.Time) {
 	}
 
 	//Create upper bound
-	upperBound := "19:55:00"
+	upperBound := "09:55:00"
 	after, err = time.Parse(layout, upperBound)
 	if err != nil {
 		log.Fatal(err)
