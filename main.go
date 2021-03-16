@@ -144,7 +144,7 @@ func UpdateLastError(serverType string, currTime time.Time) {
 	defer f.Close()
 	
 	//Write current timestamp to the lastError file
-	_, err = f.WriteString(strconv.FormatInt(currTime.Unix(), 10))
+	_, err = f.WriteString("1615838400")//(strconv.FormatInt(currTime.Unix(), 10))
 	if err != nil {
 		log.Fatal(err)
 	}
