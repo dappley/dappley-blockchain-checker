@@ -28,9 +28,12 @@ func main() {
 	fileNames := []string{main, mask, test}
 
 	//Email content
+	fmt.Println("Creating Email Message...")
 	subject, emailMessage := makeMessage(fileNames)
 	if (subject != "" && emailMessage != "") {
 		sendEmail(subject, emailMessage, fileNames, email, passWord)
+	} else {
+		fmt.Println("Unable to send Email!")
 	}
 }
 
@@ -56,6 +59,7 @@ func makeMessage(fileNames []string) (string, string){
 	//If at least one of the file contains the failure message, update the time stamp of last error
 	//and create the email message with detailed info
 	if (containFail(testResult_Bool)) {
+		fmt.Println("Test result contains failure.")
 		//Create lastError.txt recording current timestamp
 		for index, fileName := range fileNames {
 			serverType := strings.TrimSuffix(strings.TrimPrefix(fileName, "log_"), ".txt")
@@ -69,34 +73,32 @@ func makeMessage(fileNames []string) (string, string){
 			CommitScanner := bufio.NewScanner(strings.NewReader(string(testResult_Byte[index])))
 			emailMessage = FailCaseMessage(CommitScanner, emailMessage)
 		}
+		fmt.Println("Successfully generated email message!")
 		return "***Important - Dappley Web Block Check:", emailMessage
 	} else {
+		fmt.Println("Test result all passes!")
 		before, now, after := timeFrame(currTime)
 
 		//If current time is between the upper & lower bound, check when last error occured
 		if (before.Before(now) && after.After(now)) {
+			fmt.Println("Current time is between " + before.String() + "~" + after.String())
 			//check if all had error 24 before, if true continue, else return "",""
 			if (itsBeen24HrForAll(fileNames, currTime)) {
-				for _, fileName := range fileNames {
-					serverType := strings.TrimSuffix(strings.TrimPrefix(fileName, "log_"), ".txt")
-					data, err := ioutil.ReadFile("../lastError/lastError_" + serverType + ".txt")
-					if err != nil {
-						log.Fatal(err)
-					}
-					lastTimeStamp, err := strconv.ParseInt(string(data), 10, 64)
-					Message := ("Dappley - " + serverType + "\n	Last error " + time.Unix(lastTimeStamp, 0).String() +
-					"\n	Lastest test: " + currTime.String() + "\n\n")
-					emailMessage += Message
-				}
+				fmt.Println("There hasn't been any error in last 24hrs in all three servers.")
+				emailMessage = PassCaseMessage(emailMessage, fileNames, currTime)
 				head := ("Jenkins Daily Digest is sent every day at 9AM " + 
-				"when there hasn't been any error in last 24 Hours in dappley blockchain. " + 
-				"(http://dappley.dappworks.com/#/dappley/dashboard)\n\n"  +
-				"Detailed Info: \n")
+				"when there hasn't been any error in last 24 Hours in dappley blockchain. \n" + 
+				"[Main: http://dappley.dappworks.com/#/dappley/dashboard]\n" + 
+				"[Mask: http://35.80.10.175/#/dappley/dashboard]\n" + 
+				"[Test: http://54.176.241.99/#/dappley/dashboard]\n\n"  +
+				"Detailed Info: \n\n")
 				tail := ("\n\n▽ Lastest test result below ▽")
 				emailMessage = head + emailMessage + tail
+				fmt.Println("Successfully generated email message!")
 				return "Jenkins Daily Digest:", emailMessage
 			}
 		}
+		fmt.Println("Failed to generate Message")
 		return "", ""
 	}
 }
@@ -209,6 +211,7 @@ func itsBeen24HrForAll(fileNames []string, currTime time.Time) bool {
 		if err != nil {
 			UpdateLastError(serverType, currTime)
 			itsBeen24Hr = itsBeen24Hr && false
+			continue
 		}
 		lastTimeStamp, err := strconv.ParseInt(string(data), 10, 64)
 		if err != nil {
@@ -216,8 +219,26 @@ func itsBeen24HrForAll(fileNames []string, currTime time.Time) bool {
 		}
 		if (currTimeStamp - lastTimeStamp >= 86400) {
 			itsBeen24Hr = itsBeen24Hr && true
+			continue
 		}
+		itsBeen24Hr = itsBeen24Hr && false
 	}
 	return itsBeen24Hr
 }
 
+func PassCaseMessage(emailMessage string, fileNames []string, currTime time.Time) string {
+	for _, fileName := range fileNames {
+		serverType := strings.TrimSuffix(strings.TrimPrefix(fileName, "log_"), ".txt")
+		data, err := ioutil.ReadFile("../lastError/lastError_" + serverType + ".txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		
+		lastTimeStamp, err := strconv.ParseInt(string(data), 10, 64)
+		Message := ("Dappley - " + serverType + "\n	Last error:    " + time.Unix(lastTimeStamp, 0).String() +
+		"\n	Lastest test: " + time.Unix((currTime.Unix()), 0).String() + "\n\n")
+		emailMessage += Message
+	}
+
+	return emailMessage
+}
