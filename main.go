@@ -98,7 +98,7 @@ func makeMessage(fileNames []string) (string, string){
 				return "Jenkins Daily Digest:", emailMessage
 			}
 		}
-		fmt.Println("One or more condition does not match.")
+		fmt.Println("One or more condition did not match.")
 		return "", ""
 	}
 }
@@ -186,7 +186,7 @@ func timeFrame(currTime time.Time) (before, now, after time.Time) {
 	}
 
 	//Create upper bound
-	upperBound := "09:55:00"
+	upperBound := "19:55:00"
 	after, err = time.Parse(layout, upperBound)
 	if err != nil {
 		log.Fatal(err)
