@@ -98,7 +98,7 @@ func makeMessage(fileNames []string) (string, string){
 				return "Jenkins Daily Digest:", emailMessage
 			}
 		}
-		fmt.Println("Failed to generate Message")
+		fmt.Println("One or more condition does not match.")
 		return "", ""
 	}
 }
