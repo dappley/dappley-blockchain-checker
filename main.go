@@ -16,6 +16,11 @@ import (
 //--------------------Core--------------------
 
 func main() {
+	args := os.Args[1:]
+	if (len(args) < 1 || (len(args) >= 1 && !vaildArgument(args[0]))) {
+		fmt.Println("Invalid Arguments!", args[0])
+		return
+	}
 	//initialize flags
 	var email, passWord, main, test, mask string
 	flag.StringVar(&email, "email", "default@example.com", "Email address of the sender")
@@ -34,6 +39,23 @@ func main() {
 		sendEmail(subject, emailMessage, fileNames, email, passWord)
 	} else {
 		fmt.Println("Email not sent.")
+	}
+}
+
+func vaildArgument(argument string) bool {
+	switch os := argument; os {
+	case "-email":
+		return true
+	case "-passWord" :
+		return true
+	case "-test"  :
+		return true
+	case "-mask"  :
+		return true
+	case "-main"  :
+		return true
+	default:
+		return false
 	}
 }
 
