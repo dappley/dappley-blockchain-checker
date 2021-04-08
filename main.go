@@ -25,7 +25,7 @@ func main() {
 	var email, passWord, main, test, mask string
 	flag.StringVar(&email, "email", "default@example.com", "Email address of the sender")
 	flag.StringVar(&passWord, "passWord", "default_password", "Password of the sender email")
-	flag.StringVar(&test, "test", "log_test.txt", "newman log file from http://54.176.241.99: Test Server.")
+	flag.StringVar(&test, "test", "log_test.txt", "newman log file from http://3.16.250.102: Test Server.")
 	flag.StringVar(&mask, "mask", "log_mask.txt", "newman log file from http://35.80.10.175: Mask Chain Server.")
 	flag.StringVar(&main, "main", "log_main.txt", "newman log file from http://dappley.dappworks.com: Main Server")
 	flag.Parse()
@@ -112,7 +112,7 @@ func makeMessage(fileNames []string) (string, string){
 				"when there hasn't been any error in last 24 Hours in dappley blockchain. \n" + 
 				"[Main: http://dappley.dappworks.com/#/dappley/dashboard]\n" + 
 				"[Mask: http://35.80.10.175/#/dappley/dashboard]\n" + 
-				"[Test: http://54.176.241.99/#/dappley/dashboard]\n\n"  +
+				"[Test: http://3.16.250.102/#/dappley/dashboard]\n\n"  +
 				"Detailed Info: \n\n")
 				tail := ("\n\n▽ Lastest test result below ▽")
 				emailMessage = head + emailMessage + tail
