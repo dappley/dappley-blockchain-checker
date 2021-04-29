@@ -1,8 +1,8 @@
 # dappley-blockchain-checker
 
 Test the blockchains from the following servers every hour: 
-- Main  : dappley.com 
-- Mask : 35.80.10.175 
+- Main   : dappley.com 
+- Mask   : 35.80.10.175 
 - Test   : 3.16.250.102 
 
 When one of the test cases return an error, send out the email to the DappWorks staff.
