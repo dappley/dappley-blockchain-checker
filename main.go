@@ -78,6 +78,9 @@ func makeMessage(fileNames []string) (string, string){
 		testResult_Bool[index] = strings.Contains(string(content), "#  failure  detail")
 	}
 
+	//Check if the lastError directory exists
+	isLastErrorExist(fileNames, currTime)
+
 	//If at least one of the file contains the failure message, update the time stamp of last error
 	//and create the email message with detailed info
 	if (containFail(testResult_Bool)) {
@@ -150,6 +153,33 @@ func sendEmail(subject string, emailMessage string, fileNames []string, email st
 }
 
 //-------------------Helper--------------------
+
+func isExist(fileName string) bool {
+	_, err := os.Stat(fileName)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
+//If the lastError folder does not exists in the repository, make the assumption that lastError occured
+//24 hours prior to the current testing time. Create lastError directory and lastError files.
+func isLastErrorExist(fileNames []string, currTime time.Time) {
+	lastErrorExists := isExist("../lastError")
+	if !lastErrorExists {
+		fmt.Println("Creating the lastError directory...")
+		err := os.Mkdir("../lastError", os.ModePerm)
+		if err != nil {
+			fmt.Println("Could not create the lastError directory!")
+			panic(err)
+		}
+		for _, fileName := range fileNames {
+			serverType := strings.TrimSuffix(strings.TrimPrefix(fileName, "log_"), ".txt")
+			yesterday  := currTime.AddDate(0, 0, -1)
+			UpdateLastError(serverType, yesterday)
+		}
+	}
+}
 
 //Returns true when there is at least on true case
 func containFail(booList []bool) bool {
