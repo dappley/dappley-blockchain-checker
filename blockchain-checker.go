@@ -131,10 +131,10 @@ func makeMessage(fileNames []string) (string, string){
 func sendEmail(subject string, emailMessage string, fileNames []string, email string, passWord string) {
 	gmail := gomail.NewMessage()
 		gmail.SetHeader("From", email)
-		gmail.SetHeader("To", "blockchainwarning@omnisolu.com") /*,
+		gmail.SetHeader("To", "blockchainwarning@omnisolu.com",
 							  "wulize1994@gmail.com", 
 							  "rshi@omnisolu.com", 
-							  "ilshiyi@omnisolu.com")*/
+							  "ilshiyi@omnisolu.com")
 		gmail.SetHeader("Subject", subject)
 		gmail.SetBody("text", emailMessage)
 
