@@ -22,15 +22,19 @@ func main() {
 		return
 	}
 	//initialize flags
-	var email, passWord, main, test, mask string
+	// var email, passWord, main, test, mask string
+	var email, passWord, main, test string
 	flag.StringVar(&email, "email", "default@example.com", "Email address of the sender")
 	flag.StringVar(&passWord, "passWord", "default_password", "Password of the sender email")
 	flag.StringVar(&test, "test", "log_test.txt", "newman log file from http://3.16.250.102: Test Server.")
-	flag.StringVar(&mask, "mask", "log_mask.txt", "newman log file from http://35.80.10.175: Mask Chain Server.")
+	// flag.StringVar(&mask, "mask", "log_mask.txt", "newman log file from http://35.80.10.175: Mask Chain Server.")
 	flag.StringVar(&main, "main", "log_main.txt", "newman log file from http://dappley.dappworks.com: Main Server")
 	flag.Parse()
 
-	fileNames := []string{main, mask, test}
+	// Maskchain server is being paused temporarily
+	// fileNames := []string{main, mask, test}
+
+	fileNames := []string{main, test}
 
 	//Email content
 	fmt.Println("Creating Email Message...")
@@ -114,7 +118,7 @@ func makeMessage(fileNames []string) (string, string){
 				head := ("Jenkins Daily Digest is sent every day at 9AM " + 
 				"when there hasn't been any error in last 24 Hours in dappley blockchain. \n" + 
 				"[Main: http://dappley.dappworks.com/#/dappley/dashboard]\n" + 
-				"[Mask: http://35.80.10.175/#/dappley/dashboard]\n" + 
+				/* "[Mask: http://35.80.10.175/#/dappley/dashboard]\n" + */
 				"[Test: http://3.16.250.102/#/dappley/dashboard]\n\n"  +
 				"Detailed Info: \n\n")
 				tail := ("\n\n▽ Lastest test result below ▽")
@@ -131,10 +135,10 @@ func makeMessage(fileNames []string) (string, string){
 func sendEmail(subject string, emailMessage string, fileNames []string, email string, passWord string) {
 	gmail := gomail.NewMessage()
 		gmail.SetHeader("From", email)
-		gmail.SetHeader("To", "blockchainwarning@omnisolu.com",
+		gmail.SetHeader("To", "blockchainwarning@omnisolu.com") /*,
 							  "wulize1994@gmail.com", 
 							  "rshi@omnisolu.com", 
-							  "ilshiyi@omnisolu.com")
+							  "ilshiyi@omnisolu.com") */
 		gmail.SetHeader("Subject", subject)
 		gmail.SetBody("text", emailMessage)
 
