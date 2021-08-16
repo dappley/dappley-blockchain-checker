@@ -152,26 +152,25 @@ func sendEmail(subject string, emailMessage string, fileNames []string, email st
 	}
 
 	gmail := gomail.NewMessage()
-		gmail.SetHeader("From", email)
+	gmail.SetHeader("From", email)
+	addresses := make([]string, len(recipients))
+	for i, recipient := range recipients {
+		addresses[i] = gmail.FormatAddress(recipient, "")
+	}
+	gmail.SetHeader("To", addresses...)
+	gmail.SetHeader("Subject", subject)
+	gmail.SetBody("text", emailMessage)
 
-		addresses := make([]string, len(recipients))
-		for i, recipient := range recipients {
-			addresses[i] = gmail.FormatAddress(recipient, "")
-		}
-		gmail.SetHeader("To", addresses...)
-		gmail.SetHeader("Subject", subject)
-		gmail.SetBody("text", emailMessage)
+	for _, fileName := range fileNames {
+		gmail.Attach(fileName)
+	}
 
-		for _, fileName := range fileNames {
-			gmail.Attach(fileName)
-		}
+	d := gomail.NewDialer("smtp.gmail.com", 587, email, passWord)
 
-		d := gomail.NewDialer("smtp.gmail.com", 587, email, passWord)
-
-		if err := d.DialAndSend(gmail); err != nil {
-			fmt.Println("Unable to send out the email.")
-			panic(err)
-		}
+	if err := d.DialAndSend(gmail); err != nil {
+		fmt.Println("Unable to send out the email.")
+		panic(err)
+	}
 
 	fmt.Println("Email sent!")
 }
