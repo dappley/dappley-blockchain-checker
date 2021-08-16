@@ -13,10 +13,10 @@ When one of the test cases return an error, send out the email to the DappWorks 
 pipeline {
     agent any
     tools {
-        go 'go-1.16.3'
+        go 'go-1.16.6'
     }
     environment {
-        GO1163MODULE = 'on'
+        GO1166MODULE = 'on'
     }
     stages {
         stage('SCM Checkout') {
@@ -31,13 +31,13 @@ pipeline {
                 }
             }
         }
-        stage('Mask Server') {
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'newman run https://www.getpostman.com/collections/2087c1d495b54086e676 > log_Mask.txt'
-                }
-            }
-        }
+        // stage('Mask Server') {
+        //     steps {
+        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        //             sh 'newman run https://www.getpostman.com/collections/2087c1d495b54086e676 > log_Mask.txt'
+        //         }
+        //     }
+        // }
         stage('Test Server') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -47,16 +47,17 @@ pipeline {
         }
         stage('Build & Deploy') {
             steps {
-                sh 'go build blockchain-checker.go'
-                sh './blockchain-checker -email <EMAIL ADDRESS> -passWord <PASS WORD> -main log_Main.txt -mask log_Mask.txt -test log_Test.txt'
+                // sh 'sudo chown -R $USER:$USER ../lastError'
+                sh 'go mod init github.com/heesooh/dappley-blockchain-checker'
+                sh 'go mod tidy'
+                sh 'go build'
+                // sh './dappley-blockchain-checker -email <Sender Address> -passWord <Sender Password> -main log_Main.txt -mask log_Mask.txt -test log_Test.txt'
+                sh './dappley-blockchain-checker -email <Sender Address> -passWord <Sender Password> -main log_Main.txt -test log_Test.txt'
             }
         }
         stage('Close') {
             steps {
-                sh 'rm -r log_Main.txt'
-                sh 'rm -r log_Mask.txt'
-                sh 'rm -r log_Test.txt'
-                sh 'rm -r blockchain-checker'
+                sh 'rm -r *'
             }
         }
     }
