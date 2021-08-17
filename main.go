@@ -1,7 +1,8 @@
 package main
 
 import (
-	"errors"
+	"helper"
+	"email"
 	"flag"
 	"fmt"
 	"log"
@@ -21,7 +22,7 @@ func main() {
 	flag.StringVar(&main,     "main", "default_main.txt", "newman log file from http://dappley.dappworks.com: Main Server")
 	flag.Parse()
 
-	err := checkFlags(email, passWord, test, main)
+	err := helper.CheckFlags(email, passWord, test, main)
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -30,28 +31,11 @@ func main() {
 	// Create the server test result email
 	fileNames := []string{main, test}
 	fmt.Println("Creating Email Message...")
-	subject, emailMessage := composeEmail(fileNames)
+	subject, emailMessage := email.ComposeEmail(fileNames)
 
 	// Send out the email message
 	if (subject != "" && emailMessage != "") {
-		sendEmail(subject, emailMessage, fileNames, email, passWord)
+		email.SendEmail(subject, emailMessage, fileNames, email, passWord)
 		fmt.Println("Email sent!")
 	}
-}
-
-//----------Helper----------
-func checkFlags(email string, password string, test string, main string) (err error) {
-	switch {
-	case email == "default_email":
-		err = errors.New("Error: Email is missing!")
-	case password == "default_password":
-		err = errors.New("Error: Password is missing!")
-	case test == "default_test.txt":
-		err = errors.New("Error: Test server test result is missing!")
-	case main == "default_main.txt":
-		err = errors.New("Error: Main server test result is missing!")
-	default:
-		err = nil
-	}
-	return err
 }

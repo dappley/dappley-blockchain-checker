@@ -1,4 +1,4 @@
-package main
+package email
 
 import (
 	"gopkg.in/gomail.v2"
@@ -10,7 +10,7 @@ import (
 	"log"
 )
 
-func sendEmail(subject string, emailMessage string, fileNames []string, email string, passWord string) {
+func SendEmail(subject string, emailMessage string, fileNames []string, email string, passWord string) {
 	var recipients []string
 
 	file_byte, err := ioutil.ReadFile("recipients.txt")

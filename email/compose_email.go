@@ -1,4 +1,4 @@
-package main
+package email
 
 import (
 	"io/ioutil"
@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-func composeEmail(fileNames []string) (string, string) {
+func ComposeEmail(fileNames []string) (string, string) {
 	var emailMessage string
 	currTime  := time.Now()
 	testResult_Bool := make([]bool, len(fileNames))
@@ -41,12 +41,12 @@ func composeEmail(fileNames []string) (string, string) {
 
 			//If the test result contains failure, then update
 			if testResult_Bool[index] {
-				UpdateLastError(serverType, currTime)
+				updateLastError(serverType, currTime)
 			}
 
 			//Create the email message
 			testResult_Scanner := bufio.NewScanner(strings.NewReader(string(testResult_Byte[index])))
-			emailMessage = FailCaseMessage(testResult_Scanner, emailMessage)
+			emailMessage = failCaseMessage(testResult_Scanner, emailMessage)
 		}
 		fmt.Println("Successfully generated email message!")
 		return "***Important - Dappley Web Block Check:", emailMessage
@@ -60,7 +60,7 @@ func composeEmail(fileNames []string) (string, string) {
 			//check if all had error 24 before, if true continue, else return "",""
 			if (itsBeen24HrForAll(fileNames, currTime)) {
 				fmt.Println("There hasn't been any error in last 24hrs in all three servers.")
-				emailMessage = PassCaseMessage(emailMessage, fileNames, currTime)
+				emailMessage = passCaseMessage(emailMessage, fileNames, currTime)
 				head := ("Jenkins Daily Digest is sent every day at 9AM " + 
 				"when there hasn't been any error in last 24 Hours in dappley blockchain. \n" + 
 				"[Main: http://dappley.dappworks.com/#/dappley/dashboard]\n" + 
@@ -101,7 +101,7 @@ func isLastErrorExist(fileNames []string, currTime time.Time) {
 		for _, fileName := range fileNames {
 			serverType := strings.TrimSuffix(strings.TrimPrefix(fileName, "log_"), ".txt")
 			yesterday  := currTime.AddDate(0, 0, -1)
-			UpdateLastError(serverType, yesterday)
+			updateLastError(serverType, yesterday)
 		}
 	}
 }
@@ -116,7 +116,7 @@ func containsFailure(test_results []bool) bool {
 }
 
 //Update/Create a lastError file with the current timestamp
-func UpdateLastError(serverType string, currTime time.Time) {
+func updateLastError(serverType string, currTime time.Time) {
 	//Create/OverRide the file
 	f, err := os.Create("../lastError/lastError_" + serverType + ".txt")
 	if err != nil {
@@ -131,7 +131,7 @@ func UpdateLastError(serverType string, currTime time.Time) {
 	}
 }
 
-func FailCaseMessage(scanner *bufio.Scanner, content string) string {
+func failCaseMessage(scanner *bufio.Scanner, content string) string {
 	i := 0
 	for scanner.Scan() {
 		Message := scanner.Text()
@@ -153,7 +153,7 @@ func FailCaseMessage(scanner *bufio.Scanner, content string) string {
 	return content
 }
 
-func PassCaseMessage(emailMessage string, fileNames []string, currTime time.Time) string {
+func passCaseMessage(emailMessage string, fileNames []string, currTime time.Time) string {
 	for _, fileName := range fileNames {
 		serverType := strings.TrimSuffix(strings.TrimPrefix(fileName, "log_"), ".txt")
 		data, err := ioutil.ReadFile("../lastError/lastError_" + serverType + ".txt")
