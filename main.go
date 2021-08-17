@@ -1,8 +1,8 @@
 package main
 
 import (
+	gomail "github.com/heesooh/dappley-blockchain-checker/email"
 	"github.com/heesooh/dappley-blockchain-checker/helper"
-	"github.com/heesooh/dappley-blockchain-checker/email"
 	"flag"
 	"fmt"
 	"log"
@@ -31,11 +31,11 @@ func main() {
 	// Create the server test result email
 	fileNames := []string{main, test}
 	fmt.Println("Creating Email Message...")
-	subject, emailMessage := email.ComposeEmail(fileNames)
+	subject, emailMessage := gomail.ComposeEmail(fileNames)
 
 	// Send out the email message
 	if (subject != "" && emailMessage != "") {
-		email.SendEmail(subject, emailMessage, fileNames, email, passWord)
+		gomail.SendEmail(subject, emailMessage, fileNames, email, passWord)
 		fmt.Println("Email sent!")
 	}
 }
