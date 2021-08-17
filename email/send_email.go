@@ -50,7 +50,6 @@ func SendEmail(subject string, emailMessage string, fileNames []string, email st
 	}
 }
 
-//-------------------Helper--------------------
 func valid_email(email string) bool {
     _, err := mail.ParseAddress(email)
     return err == nil

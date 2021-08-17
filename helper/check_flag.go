@@ -1,7 +1,7 @@
 package helper
 
 import(
-
+	"errors"
 )
 
 func CheckFlags(email string, password string, test string, main string) (err error) {

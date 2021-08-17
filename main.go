@@ -1,8 +1,8 @@
 package main
 
 import (
-	"helper"
-	"email"
+	"github.com/heesooh/dappley-blockchain-checker/helper"
+	"github.com/heesooh/dappley-blockchain-checker/email"
 	"flag"
 	"fmt"
 	"log"

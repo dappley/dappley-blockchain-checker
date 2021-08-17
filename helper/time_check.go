@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-func timeFrame(currTime time.Time) (before, now, after time.Time) {
+func TimeFrame(currTime time.Time) (before, now, after time.Time) {
 	//Create layout for time.Time
 	layout := "15:04:05"
 
@@ -36,7 +36,7 @@ func timeFrame(currTime time.Time) (before, now, after time.Time) {
 	return
 }
 
-func itsBeen24HrForAll(fileNames []string, currTime time.Time) bool {
+func ItsBeen24HrForAll(fileNames []string, currTime time.Time) bool {
 	itsBeen24Hr   := true
 	currTimeStamp := currTime.Unix()
 	for _, fileName := range fileNames {
