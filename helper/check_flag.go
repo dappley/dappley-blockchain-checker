@@ -4,6 +4,7 @@ import(
 	"errors"
 )
 
+//Checks the flag arguments. If the argument is a default value, then return an error message.
 func CheckFlags(email string, password string, test string, main string) (err error) {
 	switch {
 	case email == "default_email":

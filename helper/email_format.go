@@ -9,15 +9,7 @@ import (
 	"log"
 )
 
-//Returns true when there is at least on true case
-func ContainsFailure(test_results []bool) bool {
-	final_result := false
-	for _, test_result := range test_results {
-		final_result = final_result || test_result
-	}
-	return final_result
-}
-
+//Create the email message content for the fail case report.
 func FailCaseMessage(scanner *bufio.Scanner, content string) string {
 	i := 0
 	for scanner.Scan() {
@@ -40,6 +32,7 @@ func FailCaseMessage(scanner *bufio.Scanner, content string) string {
 	return content
 }
 
+//Create the email message content for the pass case repeort.
 func PassCaseMessage(emailMessage string, fileNames []string, currTime time.Time) string {
 	for _, fileName := range fileNames {
 		serverType := strings.TrimSuffix(strings.TrimPrefix(fileName, "log_"), ".txt")

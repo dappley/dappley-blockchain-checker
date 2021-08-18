@@ -8,6 +8,7 @@ import (
 	"log"
 )
 
+//Create a time frame relative to the current timestamp.
 func TimeFrame(currTime time.Time) (before, now, after time.Time) {
 	//Create layout for time.Time
 	layout := "15:04:05"
@@ -36,6 +37,7 @@ func TimeFrame(currTime time.Time) (before, now, after time.Time) {
 	return
 }
 
+//Checks if the timestamp recorded in the lastError.txt file is 24 hours before the current timestamp.
 func ItsBeen24HrForAll(fileNames []string, currTime time.Time) bool {
 	itsBeen24Hr   := true
 	currTimeStamp := currTime.Unix()

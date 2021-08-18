@@ -1,15 +1,16 @@
 package email
 
 import (
+	"github.com/heesooh/dappley-blockchain-checker/helper"
 	"gopkg.in/gomail.v2"
 	"io/ioutil"
-	"net/mail"
 	"strings"
 	"bufio"
 	"fmt"
 	"log"
 )
 
+//Send out the dappley web blockchain test result to recipients specified in the recipients.txt file.
 func SendEmail(subject string, emailMessage string, fileNames []string, email string, passWord string) {
 	var recipients []string
 
@@ -21,7 +22,7 @@ func SendEmail(subject string, emailMessage string, fileNames []string, email st
 	scanner := bufio.NewScanner(strings.NewReader(string(file_byte)))
 	for scanner.Scan() {
 		line := scanner.Text()
-		if !valid_email(line) {
+		if !helper.Valid_email(line) {
 			fmt.Println("Invalid email address: \"" + line + "\"")
 			continue
 		}
@@ -48,9 +49,4 @@ func SendEmail(subject string, emailMessage string, fileNames []string, email st
 		fmt.Println("Unable to send out the email.")
 		panic(err)
 	}
-}
-
-func valid_email(email string) bool {
-    _, err := mail.ParseAddress(email)
-    return err == nil
 }

@@ -9,6 +9,7 @@ import (
 	"fmt"
 )
 
+//Composes the email message for the dappley web blockchain test result report.
 func ComposeEmail(fileNames []string) (string, string) {
 	var emailMessage string
 	currTime  := time.Now()

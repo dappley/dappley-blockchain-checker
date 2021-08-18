@@ -9,8 +9,8 @@ import(
 	"os"
 )
 
-//If the lastError folder does not exists in the repository, assume that the lastError occured
-//24 hours prior to the current testing time then create lastError directory and lastError files.
+//Checks if the lastError directory exists or not. If the directory does not exist, create
+//lastError.txt files with timestamp 24 hours prior to the current timestamp.
 func IsLastErrorExist(fileNames []string, currTime time.Time) {
 	lastErrorExists := isExist("../lastError")
 	if !lastErrorExists {
@@ -28,7 +28,7 @@ func IsLastErrorExist(fileNames []string, currTime time.Time) {
 	}
 }
 
-//Update/Create a lastError file with the current timestamp
+//Update the lastError.txt file with the current timestamp.
 func UpdateLastError(serverType string, currTime time.Time) {
 	//Create/OverRide the file
 	f, err := os.Create("../lastError/lastError_" + serverType + ".txt")
@@ -44,6 +44,7 @@ func UpdateLastError(serverType string, currTime time.Time) {
 	}
 }
 
+//Checks if the file/directory with the input name exists or not.
 func isExist(fileName string) bool {
 	_, err := os.Stat(fileName)
 	if os.IsNotExist(err) {
