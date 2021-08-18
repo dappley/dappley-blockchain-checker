@@ -16,23 +16,17 @@ func TimeFrame(currTime time.Time) (before, now, after time.Time) {
 	//Create lower bound
 	lowerBound := "08:55:00"
 	before, err := time.Parse(layout, lowerBound)
-	if err != nil {
-		log.Fatal(err)
-	}
+	if err != nil { log.Fatal(err) }
 
 	//Create upper bound
 	upperBound := "09:55:00"
 	after, err = time.Parse(layout, upperBound)
-	if err != nil {
-		log.Fatal(err)
-	}
+	if err != nil { log.Fatal(err) }
 
 	//Create current time
 	curr := currTime.Format("15:04:05")
 	now, err = time.Parse(layout, curr)
-	if err != nil {
-		log.Fatal(err)
-	}
+	if err != nil { log.Fatal(err) }
 	
 	return
 }
@@ -50,9 +44,7 @@ func ItsBeen24HrForAll(fileNames []string, currTime time.Time) bool {
 			continue
 		}
 		lastTimeStamp, err := strconv.ParseInt(string(data), 10, 64)
-		if err != nil {
-			log.Fatal(err)
-		}
+		if err != nil { log.Fatal(err) }
 		if (currTimeStamp - lastTimeStamp >= 86400) {
 			itsBeen24Hr = itsBeen24Hr && true
 			continue
@@ -61,4 +53,3 @@ func ItsBeen24HrForAll(fileNames []string, currTime time.Time) bool {
 	}
 	return itsBeen24Hr
 }
-

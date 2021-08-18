@@ -18,7 +18,6 @@ func SendEmail(subject string, emailMessage string, fileNames []string, email st
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	scanner := bufio.NewScanner(strings.NewReader(string(file_byte)))
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -29,23 +28,20 @@ func SendEmail(subject string, emailMessage string, fileNames []string, email st
 		recipients = append(recipients, line)
 	}
 
-	gmail := gomail.NewMessage()
-	gmail.SetHeader("From", email)
+	mail := gomail.NewMessage()
+	mail.SetHeader("From", email)
 	addresses := make([]string, len(recipients))
 	for i, recipient := range recipients {
-		addresses[i] = gmail.FormatAddress(recipient, "")
+		addresses[i] = mail.FormatAddress(recipient, "")
 	}
-	gmail.SetHeader("To", addresses...)
-	gmail.SetHeader("Subject", subject)
-	gmail.SetBody("text", emailMessage)
-
+	mail.SetHeader("To", addresses...)
+	mail.SetHeader("Subject", subject)
+	mail.SetBody("text", emailMessage)
 	for _, fileName := range fileNames {
-		gmail.Attach(fileName)
+		mail.Attach(fileName)
 	}
-
 	d := gomail.NewDialer("smtp.gmail.com", 587, email, passWord)
-
-	if err := d.DialAndSend(gmail); err != nil {
+	if err := d.DialAndSend(mail); err != nil {
 		fmt.Println("Unable to send out the email.")
 		panic(err)
 	}

@@ -32,23 +32,17 @@ func IsLastErrorExist(fileNames []string, currTime time.Time) {
 func UpdateLastError(serverType string, currTime time.Time) {
 	//Create/OverRide the file
 	f, err := os.Create("../lastError/lastError_" + serverType + ".txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	if err != nil { log.Fatal(err) }
 	defer f.Close()
 	
 	//Write current timestamp to the lastError file
 	_, err = f.WriteString(strconv.FormatInt(currTime.Unix(), 10))
-	if err != nil {
-		log.Fatal(err)
-	}
+	if err != nil { log.Fatal(err) }
 }
 
 //Checks if the file/directory with the input name exists or not.
 func isExist(fileName string) bool {
 	_, err := os.Stat(fileName)
-	if os.IsNotExist(err) {
-		return false
-	}
+	if os.IsNotExist(err) { return false }
 	return true
 }
