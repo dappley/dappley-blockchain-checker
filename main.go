@@ -23,10 +23,7 @@ func main() {
 	flag.Parse()
 
 	err := helper.CheckFlags(email, passWord, test, main)
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+	if err != nil { log.Fatal(err) }
 
 	// Create the server test result email
 	fileNames := []string{main, test}
